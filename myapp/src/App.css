@@ -36,3 +36,49 @@
     transform: rotate(360deg);
   }
 }
+
+
+/*pour les cartes*/
+.card {
+  position: relative;
+}
+
+.card .front {
+  transform: rotateY(90deg); /* Cachée par défaut */
+  transition: all ease-in 0.2s;
+  position: absolute;
+}
+
+.flipped .front {
+  transform: rotateY(0deg); /* Visible quand la classe flipped est là */
+  transition-delay: 0.2s;
+}
+
+.card .back {
+  transition: all ease-in 0.2s;
+  transition-delay: 0.2s;
+}
+
+.flipped .back {
+  transform: rotateY(90deg);
+  transition-delay: 0s;
+}
+
+/*ppour le bouton*/
+.custom-button {
+  background: none;
+  border: 2px solid #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1.2em;
+  transition: all 0.3s ease;
+}
+
+.custom-button:hover {
+  background: #ff5e5e; /* Une couleur vive pour le feedback */
+  color: white;
+  border-color: #ff5e5e;
+}

@@ -1,8 +1,11 @@
-import React from "react";
-function Button(props){
-    return(
-        <button>{props.text}</button>
-    )
-}
+import './Button.css';
+
+const Button = ({ onClick, children }) => {
+  return (
+    <button className="custom-button" onClick={onClick}>
+      {children}
+    </button>
+  );
+};
 
 export default Button;
