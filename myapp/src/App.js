@@ -21,6 +21,7 @@ const cardImages = [
 ];
 
 function App() {
+  const [difficulty, setDifficulty] = useState(6);
   const [cards, setCards] = useState([]);
   const [turns, setTurns] = useState(0);
   const [choiceOne, setChoiceOne] = useState(null);
@@ -29,11 +30,15 @@ function App() {
 
   const MAX_TURNS = 15;
 
-  //fonction pour mélanger les cartes
-  const shuffleCards = () => {
-    const shuffledCards = [...cardImages, ...cardImages] // doubler les cartes
-      .sort(() => Math.random() - 0.5) // mélanger
-      .map((card) => ({ ...card, id: Math.random() })); // ajouter un ID unique
+  // 1. La fonction pour mélanger (votre code était bon ici)
+  const shuffleCards = (numPairs = difficulty) => {
+    const selectedImages = [...cardImages]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, numPairs);
+
+    const shuffledCards = [...selectedImages, ...selectedImages]
+      .sort(() => Math.random() - 0.5)
+      .map((card) => ({ ...card, id: Math.random() }));
 
     setChoiceOne(null);
     setChoiceTwo(null);
@@ -41,18 +46,16 @@ function App() {
     setTurns(0);
   };
 
-  // gérer le choix d'une carte
+  // 2. AJOUT : Gérer le choix (indispensable pour que Card fonctionne)
   const handleChoice = (card) => {
-    // empêcher de choisir la même carte 2 fois
     if(card.id === choiceOne?.id) return;
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
-  // comparer les deux cartes sélectionnées
+  // 3. AJOUT : Comparer les cartes
   useEffect(() => {
     if (choiceOne && choiceTwo) {
       setDisabled(true);
-
       if (choiceOne.src === choiceTwo.src) {
         setCards(prevCards => {
           return prevCards.map(card => {
@@ -70,7 +73,7 @@ function App() {
     }
   }, [choiceOne, choiceTwo]);
 
-  // réinitialiser le tour
+  // 4. AJOUT : Réinitialiser le tour
   const resetTurn = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
@@ -78,18 +81,32 @@ function App() {
     setDisabled(false);
   };
 
-  //démarrer automatiquement une partie au chargement
   useEffect(() => {
-    shuffleCards();
-  }, []);
+    shuffleCards(difficulty);
+  }, [difficulty]);
 
+  // 5. CALCULS (Juste avant le return)
   const allMatched = cards.length > 0 && cards.every(card => card.matched);
   const isGameOver = turns >= MAX_TURNS && !allMatched;
 
   return (
     <div className="App">
       <Title />
-      <Button onClick={shuffleCards}>Nouvelle Partie</Button>
+      
+      <div className="difficulty-selector">
+        <label>Nombre de paires : </label>
+        <select 
+          value={difficulty} 
+          onChange={(e) => setDifficulty(parseInt(e.target.value))}
+        >
+          <option value="3">3 (Très Facile)</option>
+          <option value="6">6 (Normal)</option>
+          <option value="9">9 (Difficile)</option>
+          <option value="12">12 (Expert)</option>
+        </select>
+      </div>
+
+      <Button onClick={() => shuffleCards()}>Nouvelle Partie</Button>
       
       <div className="stats">
         <p>Tours : {turns} / {MAX_TURNS}</p>
@@ -112,5 +129,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
