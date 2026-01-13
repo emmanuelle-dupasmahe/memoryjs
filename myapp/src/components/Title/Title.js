@@ -1,10 +1,11 @@
+import React from 'react';
 import './Title.css';
 
 const Title = () => {
   return (
     <div className="title-container">
-      <h1>Memory Snoopy</h1>
-      <p>Trouvez toutes les paires avant la fin du chrono !</p>
+      <h1 className="snoopy-title">Snoopy <span>Memory</span></h1>
+      <div className="title-underline"></div>
     </div>
   );
 };
