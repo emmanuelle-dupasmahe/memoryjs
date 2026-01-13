@@ -66,3 +66,29 @@ body {
   font-weight: bold;
   margin-right: 10px;
 }
+/*ppour le score*/
+.stats {
+  margin: 20px 0;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  display: inline-block;
+}
+
+.stats p {
+  margin: 5px 0;
+  font-size: 1.1em;
+}
+
+.best-score {
+  color: #333;
+  font-size: 0.9em !important;
+  border-top: 1px dashed #333;
+  padding-top: 5px;
+  margin-top: 5px;
+}
+
+.stats strong {
+  color: #ffcc00;
+  text-shadow: 1px 1px 0px #333;
+}

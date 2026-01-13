@@ -27,10 +27,17 @@ function App() {
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
+  const [bestScore, setBestScore] = useState(
+    localStorage.getItem('bestScore') || "--"
+  );
 
   const MAX_TURNS = 15;
 
-  // 1. La fonction pour mélanger (votre code était bon ici)
+  // calcul
+  const allMatched = cards.length > 0 && cards.every(card => card.matched);
+  const isGameOver = turns >= MAX_TURNS && !allMatched;
+
+  // la fonction pour mélanger 
   const shuffleCards = (numPairs = difficulty) => {
     const selectedImages = [...cardImages]
       .sort(() => Math.random() - 0.5)
@@ -46,13 +53,13 @@ function App() {
     setTurns(0);
   };
 
-  // 2. AJOUT : Gérer le choix (indispensable pour que Card fonctionne)
+  // gérer le choix (indispensable pour que Card fonctionne)
   const handleChoice = (card) => {
     if(card.id === choiceOne?.id) return;
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
-  // 3. AJOUT : Comparer les cartes
+  // comparer les cartes
   useEffect(() => {
     if (choiceOne && choiceTwo) {
       setDisabled(true);
@@ -73,7 +80,19 @@ function App() {
     }
   }, [choiceOne, choiceTwo]);
 
-  // 4. AJOUT : Réinitialiser le tour
+  useEffect(() => {
+    if (allMatched) {
+      const currentBest = localStorage.getItem('bestScore');
+      if (!currentBest || turns < currentBest) {
+        localStorage.setItem('bestScore', turns);
+        setBestScore(turns);
+      }
+    }
+  }, [allMatched, turns]);
+
+ 
+
+  // réinitialiser le tour
   const resetTurn = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
@@ -85,9 +104,7 @@ function App() {
     shuffleCards(difficulty);
   }, [difficulty]);
 
-  // 5. CALCULS (Juste avant le return)
-  const allMatched = cards.length > 0 && cards.every(card => card.matched);
-  const isGameOver = turns >= MAX_TURNS && !allMatched;
+  
 
   return (
     <div className="App">
@@ -110,7 +127,9 @@ function App() {
       
       <div className="stats">
         <p>Tours : {turns} / {MAX_TURNS}</p>
+        <p className="best-score">Record : <strong>{bestScore}</strong> tours</p>
       </div>
+
 
       <div className="card-grid">
         {cards.map(card => (
