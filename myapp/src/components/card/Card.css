@@ -1,40 +1,44 @@
-/*pour les cartes*/
 .card {
   position: relative;
   width: 100%;
+  /* On déplace la transition de soulèvement ici */
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+/* Effet au survol : c'est TOUTE la carte qui monte */
+.card:hover {
+  transform: translateY(-5px);
 }
 
 .card img {
   width: 100%;
-  /* Force un carré parfait, peu importe la taille de l'image d'origine */
   aspect-ratio: 1 / 1; 
-  
-  /* L'astuce magique : l'image remplit le carré sans être écrasée */
   object-fit: contain; 
-  
-  /* On ajoute un fond blanc derrière les personnages si l'image est transparente */
   background-color: white; 
-  
   display: block;
-  border: 4px solid #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border: 4px solid #333;
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
+  /* On ne met pas de transition globale ici pour ne pas ralentir le flip */
 }
 
-
+/* --- Logique de retournement optimisée --- */
 .card .front {
-  transform: rotateY(90deg); /* Cachée par défaut */
-  transition: all ease-in 0.2s;
+  transform: rotateY(90deg);
+  transition: transform 0.2s ease-in; /* On cible uniquement transform */
   position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .flipped .front {
-  transform: rotateY(0deg); /* Visible quand la classe flipped est là */
+  transform: rotateY(0deg);
   transition-delay: 0.2s;
 }
 
 .card .back {
-  transition: all ease-in 0.2s;
+  transition: transform 0.2s ease-in;
   transition-delay: 0.2s;
 }
 
