@@ -34,23 +34,41 @@ body {
   margin: 0 auto;   /* centre les cartes dans leur colonne */
 }
 
-/* messages de fin */
+/* Messages de fin */
 .message {
-  font-size: 1.5em;
+  font-family: 'Comic Sans MS', cursive; /* Style BD */
+  font-size: 1.8em;
   font-weight: bold;
-  margin: 20px 0;
-  padding: 15px;
-  border-radius: 10px;
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 600px;
+  border-radius: 15px;
+  border: 4px solid #333; /* bordure noire */
+  box-shadow: 8px 8px 0px rgba(0,0,0,0.2); /* ombre décalée */
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.win { color: #4caf50; border: 2px solid #4caf50; background: rgba(76, 175, 80, 0.1); }
-.loss { color: #f44336; border: 2px solid #f44336; background: rgba(244, 67, 54, 0.1); }
 
-@media (max-width: 600px) {
-  .card-grid {
-    grid-template-columns: repeat(3, 1fr); /* 3 colonnes sur mobile */
-    gap: 10px;
-  }
+/* Jaune Charlie Brown pour la victoire */
+.win { 
+  color: #333; 
+  background-color: #ffcc00; 
+  border-color: #333;
 }
+
+/* Rouge "Niche de Snoopy" pour la défaite */
+.loss { 
+  color: white; 
+  background-color: #e22d2d; 
+  border-color: #333;
+}
+
+/* Petite animation pour l'apparition du message */
+@keyframes popIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/*pour le score*/
 
 .difficulty-selector {
   margin: 20px 0;
@@ -96,4 +114,12 @@ body {
 .stats strong {
   color: #ffcc00;
   text-shadow: 1px 1px 0px #333;
+}
+
+/*responsive*/
+@media (max-width: 600px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 colonnes sur mobile */
+    gap: 10px;
+  }
 }

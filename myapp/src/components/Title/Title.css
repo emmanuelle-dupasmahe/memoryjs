@@ -7,18 +7,18 @@
 }
 
 .snoopy-title {
-  font-family: 'Comic Sans MS', 'cursive', sans-serif; /* Rappelle le style BD */
+  font-family: 'Comic Sans MS', 'cursive', sans-serif; /* style BD */
   font-size: 3.5rem;
   color: #333;
   text-transform: uppercase;
   margin: 0;
   letter-spacing: -2px;
-  transform: rotate(-2deg); /* Petite inclinaison style dessin animé */
+  transform: rotate(-2deg); /* style dessin animé */
 }
 
 .snoopy-title span {
-  color: #ffcc00; /* Le jaune de Charlie Brown */
-  -webkit-text-stroke: 1.5px #333; /* Contour noir autour du texte */
+  color: #ffcc00; /* le jaune de Charlie Brown */
+  -webkit-text-stroke: 1.5px #333; /* contour noir autour du texte */
   display: inline-block;
   transform: rotate(4deg);
 }

@@ -110,6 +110,9 @@ function App() {
     <div className="App">
       <Title />
       
+      {allMatched && <div className="message win"> Victoire ! Félicitations ! </div>}
+      {isGameOver && <div className="message loss"> Game Over... Retente ta chance !</div>}
+      
       <div className="difficulty-selector">
         <label>Nombre de paires : </label>
         <select 
@@ -143,8 +146,6 @@ function App() {
         ))}
       </div>
 
-      {allMatched && <div className="message win">✨ Victoire ! Félicitations ! ✨</div>}
-      {isGameOver && <div className="message loss">💀 Game Over... Retente ta chance !</div>}
     </div>
   );
 }
