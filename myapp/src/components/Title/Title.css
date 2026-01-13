@@ -22,13 +22,3 @@
   display: inline-block;
   transform: rotate(4deg);
 }
-
-.title-underline {
-  width: 150px;
-  height: 6px;
-  background-color: #333;
-  border-radius: 10px;
-  margin-top: -5px;
-  /* Effet de trait tiré à la main */
-  transform: skewX(-20deg);
-}

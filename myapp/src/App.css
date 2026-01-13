@@ -2,7 +2,7 @@
 body {
   margin: 0;
   background-image: 
-    linear-gradient(rgba(135, 206, 235, 0.5), rgba(135, 206, 235, 0.5)),
+    linear-gradient(rgba(135, 206, 235, 0.9), rgba(135, 206, 235, 0.9)),
     url('../public/img/snoopy_content.png'); 
   
   background-attachment: fixed; 
