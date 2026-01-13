@@ -1,84 +1,46 @@
+/* Fond du jeu */
+body {
+  margin: 0;
+  background-color: #1b1b1b; /* Un gris très foncé pour faire ressortir les cartes */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .App {
+  max-width: 900px;
+  margin: 20px auto;
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* Grille de jeu */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 colonnes */
+  gap: 15px;
+  margin-top: 30px;
+  padding: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
-/*pour les cartes*/
+/* Taille contrôlée des cartes */
 .card {
-  position: relative;
+  max-width: 150px; /* Empêche les cartes d'être trop géantes */
+  margin: 0 auto;   /* Centre les cartes dans leur colonne */
 }
 
-.card .front {
-  transform: rotateY(90deg); /* Cachée par défaut */
-  transition: all ease-in 0.2s;
-  position: absolute;
-}
-
-.flipped .front {
-  transform: rotateY(0deg); /* Visible quand la classe flipped est là */
-  transition-delay: 0.2s;
-}
-
-.card .back {
-  transition: all ease-in 0.2s;
-  transition-delay: 0.2s;
-}
-
-.flipped .back {
-  transform: rotateY(90deg);
-  transition-delay: 0s;
-}
-
-/*ppour le bouton*/
-.custom-button {
-  background: none;
-  border: 2px solid #fff;
-  padding: 10px 20px;
-  border-radius: 4px;
-  color: #fff;
+/* Messages de fin */
+.message {
+  font-size: 1.5em;
   font-weight: bold;
-  cursor: pointer;
-  font-size: 1.2em;
-  transition: all 0.3s ease;
+  margin: 20px 0;
+  padding: 15px;
+  border-radius: 10px;
 }
+.win { color: #4caf50; border: 2px solid #4caf50; background: rgba(76, 175, 80, 0.1); }
+.loss { color: #f44336; border: 2px solid #f44336; background: rgba(244, 67, 54, 0.1); }
 
-.custom-button:hover {
-  background: #ff5e5e; /* Une couleur vive pour le feedback */
-  color: white;
-  border-color: #ff5e5e;
+@media (max-width: 600px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 colonnes sur mobile */
+    gap: 10px;
+  }
 }

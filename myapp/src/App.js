@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import './App.css';
-import Card from './components/card';
-import Title from './components/title';
-import Button from './components/button';
+import Card from './components/Card/Card';
+import Title from './components/Title/Title';
+import Button from './components/Button/Button';
 
 
 const cardImages = [
@@ -16,7 +16,7 @@ const cardImages = [
   { "src": "/img/sally.png", matched: false },
   { "src": "/img/schroeder.png", matched: false },
   { "src": "/img/shermy.png", matched: false },
-  { "src": "/img/snoppy.png", matched: false },
+  { "src": "/img/snoopy.png", matched: false },
   { "src": "/img/woodstock.png", matched: false }
 ];
 

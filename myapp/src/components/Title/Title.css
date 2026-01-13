@@ -1,0 +1,14 @@
+/* pour le titre*/
+.title-container h1 {
+  font-family: 'Arial', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: #fff;
+  text-shadow: 2px 2px #ff5e5e;
+  margin-bottom: 0;
+}
+
+.title-container p {
+  color: #ddd;
+  font-style: italic;
+}
