@@ -1,8 +1,13 @@
-/* Fond du jeu */
+/* fond du jeu */
 body {
   margin: 0;
-  /* Un bleu ciel doux qui rappelle l'univers des Peanuts */
-  background-color: #87CEEB; 
+  background-image: 
+    linear-gradient(rgba(135, 206, 235, 0.5), rgba(135, 206, 235, 0.5)),
+    url('../public/img/snoopy_content.png'); 
+  
+  background-attachment: fixed; 
+  background-size: 200px;       
+  background-repeat: repeat;
   font-family: 'Segoe UI', sans-serif;
 }
 
@@ -10,26 +15,26 @@ body {
   max-width: 900px;
   margin: 20px auto;
   text-align: center;
-  /* Un petit effet de papier pour le titre et les stats */
+  
   color: #333; 
 }
 
-/* Grille de jeu */
+/* grille de jeu */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 colonnes */
+  grid-template-columns: repeat(4, 1fr); 
   gap: 15px;
   margin-top: 30px;
   padding: 10px;
 }
 
-/* Taille contrôlée des cartes */
+/* taille contrôlée des cartes */
 .card {
-  max-width: 150px; /* Empêche les cartes d'être trop géantes */
-  margin: 0 auto;   /* Centre les cartes dans leur colonne */
+  max-width: 150px; /* empêche les cartes d'être trop géantes */
+  margin: 0 auto;   /* centre les cartes dans leur colonne */
 }
 
-/* Messages de fin */
+/* messages de fin */
 .message {
   font-size: 1.5em;
   font-weight: bold;
@@ -66,7 +71,7 @@ body {
   font-weight: bold;
   margin-right: 10px;
 }
-/*ppour le score*/
+/*pour le score*/
 .stats {
   margin: 20px 0;
   padding: 15px;

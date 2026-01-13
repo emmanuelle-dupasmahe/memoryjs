@@ -1,4 +1,4 @@
-import './Card.css';
+import './CardGame.css';
 
 const Card = ({ card, handleChoice, flipped, disabled }) => {
 

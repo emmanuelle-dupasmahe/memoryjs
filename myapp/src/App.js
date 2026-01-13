@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './App.css';
-import Card from './components/Card/Card';
+import Card from './components/CardGame/CardGame';
 import Title from './components/Title/Title';
 import Button from './components/Button/Button';
 
