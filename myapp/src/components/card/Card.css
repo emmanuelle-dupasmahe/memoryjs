@@ -1,7 +1,26 @@
 /*pour les cartes*/
 .card {
   position: relative;
+  width: 100%;
 }
+
+.card img {
+  width: 100%;
+  /* Force un carré parfait, peu importe la taille de l'image d'origine */
+  aspect-ratio: 1 / 1; 
+  
+  /* L'astuce magique : l'image remplit le carré sans être écrasée */
+  object-fit: contain; 
+  
+  /* On ajoute un fond blanc derrière les personnages si l'image est transparente */
+  background-color: white; 
+  
+  display: block;
+  border: 4px solid #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
 
 .card .front {
   transform: rotateY(90deg); /* Cachée par défaut */
@@ -22,10 +41,4 @@
 .flipped .back {
   transform: rotateY(90deg);
   transition-delay: 0s;
-}
-
-.card img {
-  width: 100%; /* L'image prend toute la largeur de son conteneur .card */
-  display: block;
-  border-radius: 8px;
 }

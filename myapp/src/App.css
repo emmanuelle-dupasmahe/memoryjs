@@ -1,15 +1,17 @@
 /* Fond du jeu */
 body {
   margin: 0;
-  background-color: #1b1b1b; /* Un gris très foncé pour faire ressortir les cartes */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* Un bleu ciel doux qui rappelle l'univers des Peanuts */
+  background-color: #87CEEB; 
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .App {
   max-width: 900px;
   margin: 20px auto;
   text-align: center;
-  color: white;
+  /* Un petit effet de papier pour le titre et les stats */
+  color: #333; 
 }
 
 /* Grille de jeu */
