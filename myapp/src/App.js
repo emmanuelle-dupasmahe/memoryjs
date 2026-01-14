@@ -48,8 +48,8 @@ function App() {
 
   // sauvegarde des records par niveau
   useEffect(() => {
-    if (allMatched && turns > 0) {
-      const currentBest = bestScores[difficulty]?.score;
+    if (allMatched && turns > 0 && cards.length === difficulty * 2) {
+    const currentBest = bestScores[difficulty]?.score;
       
       if (currentBest === undefined || currentBest === "--" || turns < currentBest) {
         const newScores = { 
@@ -93,18 +93,20 @@ function App() {
   }, [difficulty]);
 
   const shuffleCards = (numPairs = difficulty) => {
-    const selectedImages = [...cardImages].sort(() => Math.random() - 0.5).slice(0, numPairs);
-    const shuffledCards = [...selectedImages, ...selectedImages]
-      .sort(() => Math.random() - 0.5)
-      .map((card) => ({ ...card, id: Math.random() }));
+    setCards([]);
+    setTimeout(() => {
+      const selectedImages = [...cardImages].sort(() => Math.random() - 0.5).slice(0, numPairs);
+      const shuffledCards = [...selectedImages, ...selectedImages]
+        .sort(() => Math.random() - 0.5)
+        .map((card) => ({ ...card, id: Math.random() }));
     
-    setChoiceOne(null);
-    setChoiceTwo(null);
-    setCards(shuffledCards);
-    setTurns(0);
-    setDisabled(false);
-  };
-
+      setChoiceOne(null);
+      setChoiceTwo(null);
+      setCards(shuffledCards);
+      setTurns(0);
+      setDisabled(false);
+  }, 10); // Un délai minuscule suffit à "casser" la condition de victoire
+};
   const handleChoice = (card) => {
     if(card.id === choiceOne?.id) return;
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
