@@ -4,7 +4,6 @@ import Card from './components/CardGame/CardGame';
 import Title from './components/Title/Title';
 import Button from './components/Button/Button';
 
-
 const cardImages = [
   { "src": "/img/charlie_brown.png", matched: false },
   { "src": "/img/franklin.png", matched: false },
@@ -27,37 +26,46 @@ function App() {
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
-  const [bestScore, setBestScore] = useState(
-    localStorage.getItem('bestScore') || "--"
-  );
 
-  const MAX_TURNS = 15;
+  //pour le Pseudo
+  const [playerName, setPlayerName] = useState(localStorage.getItem('playerName') || "Snoopy");
 
-  // calcul
+  //pour les Records (sécurisé)
+  const [bestScores, setBestScores] = useState(() => {
+    const saved = localStorage.getItem('bestScores');
+    try {
+      return saved ? JSON.parse(saved) : {};
+    } catch (e) {
+      return {};
+    }
+  });
+
+  // calculs dynamiques
+  const MAX_TURNS = difficulty * 2 + 2; 
   const allMatched = cards.length > 0 && cards.every(card => card.matched);
   const isGameOver = turns >= MAX_TURNS && !allMatched;
+  const currentLevelRecord = bestScores[difficulty] || { score: "--", name: "" };
 
-  // la fonction pour mélanger 
-  const shuffleCards = (numPairs = difficulty) => {
-    const selectedImages = [...cardImages]
-      .sort(() => Math.random() - 0.5)
-      .slice(0, numPairs);
+  // sauvegarde des records par niveau
+  useEffect(() => {
+    if (allMatched && turns > 0) {
+      const currentBest = bestScores[difficulty]?.score;
+      
+      if (currentBest === undefined || currentBest === "--" || turns < currentBest) {
+        const newScores = { 
+          ...bestScores, 
+          [difficulty]: { score: turns, name: playerName } 
+        };
+        setBestScores(newScores);
+        localStorage.setItem('bestScores', JSON.stringify(newScores));
+      }
+    }
+  }, [allMatched, turns, difficulty, playerName, bestScores]);
 
-    const shuffledCards = [...selectedImages, ...selectedImages]
-      .sort(() => Math.random() - 0.5)
-      .map((card) => ({ ...card, id: Math.random() }));
-
-    setChoiceOne(null);
-    setChoiceTwo(null);
-    setCards(shuffledCards);
-    setTurns(0);
-  };
-
-  // gérer le choix (indispensable pour que Card fonctionne)
-  const handleChoice = (card) => {
-    if(card.id === choiceOne?.id) return;
-    choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
-  };
+  //sauvegarde du nom
+  useEffect(() => {
+    localStorage.setItem('playerName', playerName);
+  }, [playerName]);
 
   // comparer les cartes
   useEffect(() => {
@@ -68,9 +76,8 @@ function App() {
           return prevCards.map(card => {
             if (card.src === choiceOne.src) {
               return { ...card, matched: true };
-            } else {
-              return card;
             }
+            return card;
           });
         });
         resetTurn();
@@ -80,19 +87,29 @@ function App() {
     }
   }, [choiceOne, choiceTwo]);
 
+  // mélanger au changement de difficulté
   useEffect(() => {
-    if (allMatched) {
-      const currentBest = localStorage.getItem('bestScore');
-      if (!currentBest || turns < currentBest) {
-        localStorage.setItem('bestScore', turns);
-        setBestScore(turns);
-      }
-    }
-  }, [allMatched, turns]);
+    shuffleCards(difficulty);
+  }, [difficulty]);
 
- 
+  const shuffleCards = (numPairs = difficulty) => {
+    const selectedImages = [...cardImages].sort(() => Math.random() - 0.5).slice(0, numPairs);
+    const shuffledCards = [...selectedImages, ...selectedImages]
+      .sort(() => Math.random() - 0.5)
+      .map((card) => ({ ...card, id: Math.random() }));
+    
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setCards(shuffledCards);
+    setTurns(0);
+    setDisabled(false);
+  };
 
-  // réinitialiser le tour
+  const handleChoice = (card) => {
+    if(card.id === choiceOne?.id) return;
+    choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+  };
+
   const resetTurn = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
@@ -100,39 +117,44 @@ function App() {
     setDisabled(false);
   };
 
-  useEffect(() => {
-    shuffleCards(difficulty);
-  }, [difficulty]);
-
-  
-
   return (
     <div className="App">
       <Title />
       
-      {allMatched && <div className="message win"> Victoire ! Félicitations ! </div>}
-      {isGameOver && <div className="message loss"> Game Over... Retente ta chance !</div>}
-      
-      <div className="difficulty-selector">
-        <label>Nombre de paires : </label>
-        <select 
-          value={difficulty} 
-          onChange={(e) => setDifficulty(parseInt(e.target.value))}
-        >
-          <option value="3">3 (Très Facile)</option>
-          <option value="6">6 (Normal)</option>
-          <option value="9">9 (Difficile)</option>
-          <option value="12">12 (Expert)</option>
-        </select>
+      {/* Messages de fin */}
+      {allMatched && <div className="message win"> Victoire ! Félicitations {playerName} ! </div>}
+      {isGameOver && <div className="message loss"> Game Over... Retente ta chance {playerName} !</div>}
+
+      <div className="game-settings">
+        <div className="input-group">
+          <label>Pseudo : </label>
+          <input 
+            type="text" 
+            value={playerName} 
+            onChange={(e) => setPlayerName(e.target.value)} 
+            maxLength="12" 
+          />
+        </div>
+        <div className="input-group">
+          <label>Difficulté : </label>
+          <select value={difficulty} onChange={(e) => setDifficulty(parseInt(e.target.value))}>
+            <option value="3">3 Paires (Facile)</option>
+            <option value="6">6 Paires (Normal)</option>
+            <option value="9">9 Paires (Difficile)</option>
+            <option value="12">12 Paires (Expert)</option>
+          </select>
+        </div>
       </div>
 
       <Button onClick={() => shuffleCards()}>Nouvelle Partie</Button>
       
       <div className="stats">
-        <p>Tours : {turns} / {MAX_TURNS}</p>
-        <p className="best-score">Record : <strong>{bestScore}</strong> tours</p>
+        <p>Tours : <strong>{turns}</strong> / {MAX_TURNS}</p>
+        <p className="best-score">
+          Record (Niveau {difficulty}) : 
+          <strong> {currentLevelRecord.score}</strong> {currentLevelRecord.name && `par ${currentLevelRecord.name}`}
+        </p>
       </div>
-
 
       <div className="card-grid">
         {cards.map(card => (
@@ -145,8 +167,8 @@ function App() {
           />
         ))}
       </div>
-
     </div>
   );
 }
+
 export default App;
